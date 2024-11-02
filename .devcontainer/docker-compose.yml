@@ -6,11 +6,9 @@ services:
     command: /bin/sh -c "while sleep 1000; do :; done"
     volumes:
       - ..:/home/vscode/workspace:cached
-    network_mode: service:pyiceberg-catalog-db
-    # depends_on:
-    #   - app
-    # networks:
-    #   - network
+    networks:
+      - dagster-pyiceberg-example
+  # PyIceberg catalog backend
   pyiceberg-catalog-db:
     image: postgres:17
     restart: unless-stopped
@@ -20,6 +18,38 @@ services:
       POSTGRES_USER: pyiceberg
       POSTGRES_DB: catalog
       POSTGRES_PASSWORD: pyiceberg
+    networks:
+      - dagster-pyiceberg-example
+  # Minio for storing the Iceberg tables
+  minio:
+    image: docker.io/bitnami/minio:2022
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    networks:
+      - dagster-pyiceberg-example
+    volumes:
+      - 'minio-data:/data'
+    environment:
+      - MINIO_ROOT_USER=pyiceberg
+      - MINIO_ROOT_PASSWORD=pyiceberg
+      - MINIO_DEFAULT_BUCKETS=warehouse
+  # For rate-limiting requests to the luchtmeetnet API
+  redis:
+    image: redis/redis-stack-server:6.2.6-v17
+    restart: unless-stopped
+    networks:
+      - dagster-pyiceberg-example
+    volumes:
+      - redis-data:/data
+    environment:
+      REDIS_ARGS: --requirepass dagster --user dagster --port 16564
+
+networks:
+  dagster-pyiceberg-example:
+    name: dagster-pyiceberg-example-network
 
 volumes:
   postgres-data:
+  redis-data:
+  minio-data:
