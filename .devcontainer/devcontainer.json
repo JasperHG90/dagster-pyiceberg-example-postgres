@@ -33,12 +33,8 @@
       }
     },
     "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder} && git config --global --add credential.useHttpPath true",
-    "runArgs": [
-      "--env-file",
-      ".devcontainer/.env"
-    ],
     "workspaceFolder": "/home/vscode/workspace",
-    "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/workspace,type=bind",
+    //"workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/workspace,type=bind",
     "features": {
       "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },

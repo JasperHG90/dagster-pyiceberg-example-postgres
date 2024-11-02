@@ -1,5 +1,6 @@
 services:
   dagster-pyiceberg-example:
+    env_file: .env
     build:
       dockerfile: Dockerfile
       context: "."

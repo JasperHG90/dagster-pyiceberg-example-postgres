@@ -33,8 +33,8 @@ warnings.filterwarnings("ignore", category=ExperimentalWarning)
 
 @asset(
     description="Air quality data from the Luchtmeetnet API",
-    compute_kind="duckdb",
-    io_manager_key="landing_zone",
+    compute_kind="iceberg",
+    io_manager_key="io_manager",
     partitions_def=daily_station_partition,
     retry_policy=RetryPolicy(
         max_retries=3, delay=30, backoff=Backoff.EXPONENTIAL, jitter=Jitter.PLUS_MINUS
@@ -75,8 +75,8 @@ def air_quality_data(
 
 @asset(
     description="Copy air quality data from ingestion to bronze",
-    compute_kind="duckdb",
-    io_manager_key="data_lake_bronze",
+    compute_kind="iceberg",
+    io_manager_key="io_manager",
     partitions_def=daily_partition,
     ins={
         "ingested_data": AssetIn(
@@ -85,7 +85,7 @@ def air_quality_data(
             partition_mapping=MultiToSingleDimensionPartitionMapping(
                 partition_dimension_name="daily"
             ),
-            input_manager_key="landing_zone",
+            input_manager_key="io_manager",
         )
     },
     auto_materialize_policy=AutoMaterializePolicy.eager(

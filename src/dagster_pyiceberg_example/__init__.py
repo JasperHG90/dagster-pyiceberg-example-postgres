@@ -1,4 +1,4 @@
-from dagster import Definitions, EnvVar
+from dagster import Definitions, EnvVar, FilesystemIOManager
 
 from dagster_pyiceberg_example.assets import air_quality_data, daily_air_quality_data
 from dagster_pyiceberg_example.IO import (
@@ -8,6 +8,7 @@ from dagster_pyiceberg_example.IO import (
 )
 
 resources = {
+    "io_manager": FilesystemIOManager(),
     "luchtmeetnet_api": LuchtMeetNetResource(
         rate_limiter=RateLimiterResource(  # See https://api-docs.luchtmeetnet.nl/ for rate limits
             rate_calls=100,
