@@ -34,5 +34,5 @@ repos:
     rev: v1.8.0
     hooks:
       - id: mypy
-        additional_dependencies: ['types-PyYAML', 'types-decorator', 'types-requests', 'types-pytz', 'types-cachetools']
+        additional_dependencies: ['types-PyYAML', 'types-decorator', 'types-requests', 'types-pytz', 'types-cachetools', 'types-redis']
 exclude: 'static/'
