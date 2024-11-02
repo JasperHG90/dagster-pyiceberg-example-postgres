@@ -63,7 +63,7 @@ warnings.filterwarnings("ignore", category=ExperimentalWarning)
     group_name="measurements",
     metadata={
         "partition_expr": {
-            "daily": "start",
+            "daily": "measurement_date",
             "stations": "station_number",
         }
     },

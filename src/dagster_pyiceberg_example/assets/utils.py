@@ -1,3 +1,5 @@
+import datetime as dt
+
 import pandas as pd
 from dagster import AssetExecutionContext, Failure
 from httpx import HTTPStatusError
@@ -29,6 +31,5 @@ def get_air_quality_data_for_partition_key(
         else:
             raise e
     df["station_number"] = station
-    df["start"] = start
-    df["end"] = end
+    df["measurement_date"] = dt.date.fromisoformat(date)
     return df

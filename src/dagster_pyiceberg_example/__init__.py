@@ -27,8 +27,8 @@ resources = {
             },
         ),
         schema="air_quality",
-        partition_spec_update_mode="error",
-        schema_update_mode="error",
+        partition_spec_update_mode="update",
+        schema_update_mode="update",
     ),
     "luchtmeetnet_api": LuchtMeetNetResource(
         rate_limiter=RateLimiterResource(  # See https://api-docs.luchtmeetnet.nl/ for rate limits
