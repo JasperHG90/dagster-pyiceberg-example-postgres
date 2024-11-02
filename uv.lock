@@ -300,7 +300,7 @@ requires-dist = [
 [[package]]
 name = "dagster-pyiceberg-example"
 version = "0.0.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "coolname" },
     { name = "dagit" },
@@ -314,7 +314,7 @@ dependencies = [
     { name = "redis" },
 ]
 
-[package.dev-dependencies]
+[package.dependency-groups]
 dev = [
     { name = "pre-commit" },
 ]
@@ -333,7 +333,7 @@ requires-dist = [
     { name = "redis", specifier = ">=5.2.0" },
 ]
 
-[package.metadata.requires-dev]
+[package.metadata.dependency-groups]
 dev = [{ name = "pre-commit", specifier = ">=4.0.1" }]
 
 [[package]]
