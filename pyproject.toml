@@ -5,6 +5,8 @@ description = "Example project for using dagster-pyiceberg. See <https://jasperh
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "dagit>=1.9.0",
+    "dagster>=1.9.0",
     "dagster-pyiceberg",
     "dagster-pyiceberg-pandas",
     "pyiceberg",
