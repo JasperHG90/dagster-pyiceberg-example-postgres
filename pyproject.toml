@@ -4,4 +4,64 @@ version = "0.0.0"
 description = "Example project for using dagster-pyiceberg. See <https://jasperhg90.github.io/dagster-pyiceberg/>"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "dagster-pyiceberg",
+    "dagster-pyiceberg-pandas",
+    "pyiceberg",
+]
+
+[tool.uv.sources]
+dagster-pyiceberg = { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.1/dagster_pyiceberg-0.0.1-py3-none-any.whl" }
+pyiceberg = { git = "https://github.com/apache/iceberg-python", rev = "0cebec4" }
+dagster-pyiceberg-pandas = { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.1/dagster_pyiceberg_pandas-0.0.1-py3-none-any.whl" }
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0.1",
+]
+
+[tool.black]
+line-length = 88
+exclude = '''
+^/(
+  (
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.venv
+    | _build
+    | build
+    | dist
+    | .notebooks
+    | .nox
+  )
+)
+'''
+
+[tool.isort]
+profile = "black"
+extend_skip = [".notebooks", ".nox", ".venv"]
+
+[tool.mypy]
+exclude = [
+  '^docs/'
+]
+ignore_missing_imports = true
+explicit_package_bases = true
+
+[tool.bandit]
+skips = ['B101']
+
+[tool.ruff]
+lint.ignore = ["E501"]
+extend-exclude = [
+  "__pycache__",
+  "docs",
+  "site",
+  ".nox",
+  ".notebooks"
+]
+
+[tool.pytest.ini_options]
+cache_dir = "/home/vscode/workspace/.cache/pytest"
