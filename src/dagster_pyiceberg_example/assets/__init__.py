@@ -1,5 +1,4 @@
 import hashlib
-import os
 import warnings
 
 import pandas as pd
@@ -11,7 +10,6 @@ from dagster import (
     Backoff,
     DataVersion,
     ExperimentalWarning,
-    FreshnessPolicy,
     Jitter,
     MultiToSingleDimensionPartitionMapping,
     Output,
@@ -28,7 +26,6 @@ from dagster_pyiceberg_example.IO import LuchtMeetNetResource
 from dagster_pyiceberg_example.partitions import (
     daily_partition,
     daily_station_partition,
-    stations_partition,
 )
 
 warnings.filterwarnings("ignore", category=ExperimentalWarning)
@@ -112,53 +109,3 @@ def daily_air_quality_data(
     context: AssetExecutionContext, ingested_data: pd.DataFrame
 ) -> pd.DataFrame:
     return ingested_data
-
-
-@asset(
-    io_manager_key="landing_zone",
-    compute_kind="duckdb",
-    description="Luchtmeetnet API stations",
-    partitions_def=stations_partition,
-    # Setting max_materializations_per_minute disables the dagster rate limiter
-    auto_materialize_policy=AutoMaterializePolicy.eager(
-        max_materializations_per_minute=None
-    ).with_rules(
-        AutoMaterializeRule.materialize_on_missing(),
-        AutoMaterializeRule.materialize_on_cron("0 0 1 * *", all_partitions=True),
-    ),
-    op_tags=const.K8S_TAGS,
-    group_name="stations",
-)
-def station_names(
-    context: AssetExecutionContext,
-    luchtmeetnet_api: LuchtMeetNetResource,
-) -> pd.DataFrame:
-    return pd.DataFrame(
-        luchtmeetnet_api.request(
-            os.path.join("stations", context.partition_key),
-            context=context,
-            paginate=False,
-        )
-    )
-
-
-@asset(
-    io_manager_key="data_lake_bronze",
-    description="Copy station names from ingestion to bronze",
-    compute_kind="duckdb",
-    auto_materialize_policy=AutoMaterializePolicy.eager().with_rules(
-        AutoMaterializeRule.materialize_on_missing(),
-        AutoMaterializeRule.materialize_on_parent_updated(),
-        AutoMaterializeRule.materialize_on_required_for_freshness(),
-    ),
-    freshness_policy=FreshnessPolicy(
-        maximum_lag_minutes=10,
-        cron_schedule="0 0 1 * *",
-    ),
-    op_tags=const.K8S_TAGS,
-    group_name="stations",
-)
-def air_quality_station_names(
-    context: AssetExecutionContext, station_names: pd.DataFrame
-) -> pd.DataFrame:
-    return station_names
