@@ -3,9 +3,7 @@ from typing import Any, Dict, List, Optional
 from coolname import generate_slug
 from dagster import AssetExecutionContext, ConfigurableResource, ResourceDependency
 
-from dagster_pyiceberg_example._luchtmeetnet.api import (
-    get_results_luchtmeetnet_endpoint,
-)
+from dagster_pyiceberg_example._luchtmeetnet import get_results_luchtmeetnet_endpoint
 from dagster_pyiceberg_example.IO.resource_rate_limiter import RateLimiterResource
 
 

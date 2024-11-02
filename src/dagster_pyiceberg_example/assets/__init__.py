@@ -3,14 +3,6 @@ import os
 import warnings
 
 import pandas as pd
-from dags.luchtmeetnet.assets import const
-from dags.luchtmeetnet.assets.utils import get_air_quality_data_for_partition_key
-from dags.luchtmeetnet.IO.resources import LuchtMeetNetResource  # type: ignore
-from dags.luchtmeetnet.partitions import (
-    daily_partition,
-    daily_station_partition,
-    stations_partition,
-)
 from dagster import (
     AssetExecutionContext,
     AssetIn,
@@ -27,6 +19,17 @@ from dagster import (
     asset,
 )
 from pandas.util import hash_pandas_object
+
+from dagster_pyiceberg_example.assets import const
+from dagster_pyiceberg_example.assets.utils import (
+    get_air_quality_data_for_partition_key,
+)
+from dagster_pyiceberg_example.IO import LuchtMeetNetResource
+from dagster_pyiceberg_example.partitions import (
+    daily_partition,
+    daily_station_partition,
+    stations_partition,
+)
 
 warnings.filterwarnings("ignore", category=ExperimentalWarning)
 

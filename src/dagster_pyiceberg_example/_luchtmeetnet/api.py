@@ -6,7 +6,7 @@ import httpx
 
 from dagster_pyiceberg_example._luchtmeetnet.const import LUCHTMEETNET_BASE_URL
 
-logger = logging.getLogger("dagster_orchestrators.IO.api")
+logger = logging.getLogger("dagster_pyiceberg_example._luchtmeetnet.api")
 
 
 def get_results_luchtmeetnet_endpoint(

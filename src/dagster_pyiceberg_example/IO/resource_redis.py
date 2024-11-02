@@ -5,7 +5,7 @@ from typing import Iterator, Optional
 from dagster import ConfigurableResource, InitResourceContext
 from redis import ConnectionError, Redis
 
-logger = logging.getLogger("src.shared.dagster_utils.IO.redis")
+logger = logging.getLogger("dagster_pyiceberg_example.IO.resource_redis")
 
 
 @contextmanager

@@ -1,7 +1,8 @@
 import pandas as pd
-from dags.luchtmeetnet.IO.resources import LuchtMeetNetResource  # type: ignore
 from dagster import AssetExecutionContext, Failure
 from httpx import HTTPStatusError
+
+from dagster_pyiceberg_example.IO import LuchtMeetNetResource
 
 
 def get_air_quality_data_for_partition_key(
