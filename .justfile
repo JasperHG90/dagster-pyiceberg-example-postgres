@@ -2,6 +2,7 @@ alias s := setup
 alias t := test
 alias p := pre_commit
 alias dd := dagster_dev
+alias cn := create_air_quality_namespace
 
 # Install python dependencies
 install:
@@ -21,6 +22,10 @@ pre_commit:
 # Run pytest
 test:
   uv run pytest tests
+
+# Create the 'air_quality' namespace in the pyiceberg catalog
+create_air_quality_namespace:
+  uv run python scripts/create_catalog_namespace.py
 
 # Run dagster dev
 dagster_dev:
