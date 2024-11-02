@@ -61,6 +61,12 @@ warnings.filterwarnings("ignore", category=ExperimentalWarning)
     op_tags=const.K8S_TAGS,
     code_version="v1",
     group_name="measurements",
+    metadata={
+        "partition_expr": {
+            "daily": "start",
+            "stations": "station_number",
+        }
+    },
 )
 def air_quality_data(
     context: AssetExecutionContext,

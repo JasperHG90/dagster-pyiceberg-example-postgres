@@ -4,7 +4,7 @@ from pyiceberg.catalog.sql import SqlCatalog
 
 if __name__ == "__main__":
     catalog = SqlCatalog(
-        name="catalog",
+        name="dagster_example_catalog",
         **{
             "uri": os.environ["DAGSTER_SECRET_PYICEBERG_CATALOG_URI"],
             "s3.endpoint": os.environ["DAGSTER_SECRET_S3_ENDPOINT"],

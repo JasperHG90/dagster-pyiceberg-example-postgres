@@ -13,8 +13,8 @@ services:
   postgres:
     image: postgres:17
     restart: unless-stopped
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
+    #volumes:
+    #  - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: pyiceberg
       POSTGRES_DB: catalog
