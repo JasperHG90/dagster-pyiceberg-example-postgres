@@ -1,0 +1,7 @@
+[project]
+name = "dagster-pyiceberg-example"
+version = "0.0.0"
+description = "Example project for using dagster-pyiceberg. See <https://jasperhg90.github.io/dagster-pyiceberg/>"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
