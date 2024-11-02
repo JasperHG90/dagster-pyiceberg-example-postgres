@@ -10,7 +10,7 @@ services:
     networks:
       - dagster-pyiceberg-example
   # PyIceberg catalog backend
-  pyiceberg-catalog-db:
+  postgres:
     image: postgres:17
     restart: unless-stopped
     volumes:
@@ -35,6 +35,8 @@ services:
       - MINIO_ROOT_USER=pyiceberg
       - MINIO_ROOT_PASSWORD=pyiceberg
       - MINIO_DEFAULT_BUCKETS=warehouse
+      - MINIO_ACCESS_KEY=fhgsf678264687gdsjfhg
+      - MINIO_SECRET_KEY=89899fsd3e347fah87nmcsa
   # For rate-limiting requests to the luchtmeetnet API
   redis:
     image: redis/redis-stack-server:6.2.6-v17
