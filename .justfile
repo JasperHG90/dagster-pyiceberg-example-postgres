@@ -1,6 +1,7 @@
 alias s := setup
 alias t := test
 alias p := pre_commit
+alias dd := dagster_dev
 
 # Install python dependencies
 install:
@@ -20,3 +21,12 @@ pre_commit:
 # Run pytest
 test:
   uv run pytest tests
+
+# Run dagster dev
+dagster_dev:
+  #!/usr/bin/env bash
+  set -eo pipefail
+  mkdir -p .dagster
+  cp dagster.yaml .dagster/dagster.yaml
+  export DAGSTER_HOME=$(pwd)/.dagster
+  uv run dagster dev -d /home/vscode/workspace -f /home/vscode/workspace/src/dagster_pyiceberg_example/__init__.py

@@ -35,13 +35,11 @@ exclude = '''
       \.eggs         # exclude a few common directories in the
     | \.git          # root of the project
     | \.hg
-    | \.mypy_cache
+    | \.cache
     | \.venv
     | _build
     | build
     | dist
-    | .notebooks
-    | .nox
   )
 )
 '''
@@ -51,9 +49,6 @@ profile = "black"
 extend_skip = [".notebooks", ".nox", ".venv"]
 
 [tool.mypy]
-exclude = [
-  '^docs/'
-]
 ignore_missing_imports = true
 explicit_package_bases = true
 
@@ -64,10 +59,6 @@ skips = ['B101']
 lint.ignore = ["E501"]
 extend-exclude = [
   "__pycache__",
-  "docs",
-  "site",
-  ".nox",
-  ".notebooks"
 ]
 
 [tool.pytest.ini_options]

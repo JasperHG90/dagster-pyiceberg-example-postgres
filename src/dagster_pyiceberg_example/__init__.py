@@ -1,11 +1,6 @@
 from dagster import Definitions, EnvVar
 
-from dagster_pyiceberg_example.assets import (
-    air_quality_data,
-    air_quality_station_names,
-    daily_air_quality_data,
-    station_names,
-)
+from dagster_pyiceberg_example.assets import air_quality_data, daily_air_quality_data
 from dagster_pyiceberg_example.IO import (
     LuchtMeetNetResource,
     RateLimiterResource,
@@ -33,8 +28,6 @@ definition = Definitions(
     assets=[
         air_quality_data,
         daily_air_quality_data,
-        station_names,
-        air_quality_station_names,
     ],
     resources=resources,
 )

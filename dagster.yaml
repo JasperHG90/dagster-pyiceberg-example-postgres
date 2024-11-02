@@ -1,0 +1,11 @@
+# NB: only for local development using 'dagster dev'
+run_queue:
+  max_concurrent_runs: 5
+  tag_concurrency_limits:
+    - key: "dagster/backfill"
+      limit: 6
+
+python_logs:
+  managed_python_loggers:
+    - dagster_pyiceberg_example
+  python_log_level: DEBUG
