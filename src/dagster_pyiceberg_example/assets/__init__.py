@@ -5,8 +5,6 @@ import pandas as pd
 from dagster import (
     AssetExecutionContext,
     AssetIn,
-    AutoMaterializePolicy,
-    AutoMaterializeRule,
     Backoff,
     DataVersion,
     ExperimentalWarning,
@@ -18,7 +16,6 @@ from dagster import (
 )
 from pandas.util import hash_pandas_object
 
-from dagster_pyiceberg_example.assets import const
 from dagster_pyiceberg_example.assets.utils import (
     get_air_quality_data_for_partition_key,
 )
@@ -39,26 +36,6 @@ warnings.filterwarnings("ignore", category=ExperimentalWarning)
     retry_policy=RetryPolicy(
         max_retries=3, delay=30, backoff=Backoff.EXPONENTIAL, jitter=Jitter.PLUS_MINUS
     ),
-    # NB: setting this to a higher value will disallow use of context.partition_key because
-    #  will be supplied a range. See https://docs.dagster.io/_apidocs/libraries/dagster-duckdb
-    # Higher values currently not supported because reading in ranges is not supported in the
-    # I/O manager
-    # backfill_policy=BackfillPolicy.multi_run(max_partitions_per_run=1),
-    auto_materialize_policy=AutoMaterializePolicy.eager(
-        max_materializations_per_minute=None
-    )
-    .with_rules(
-        AutoMaterializeRule.materialize_on_cron(
-            "0 3 * * *", all_partitions=False, timezone="Europe/Amsterdam"
-        ),
-    )
-    .without_rules(
-        AutoMaterializeRule.skip_on_parent_outdated(),
-        AutoMaterializeRule.skip_on_parent_missing(),
-        AutoMaterializeRule.materialize_on_parent_updated(),
-        AutoMaterializeRule.materialize_on_missing(),
-    ),
-    op_tags=const.K8S_TAGS,
     code_version="v1",
     group_name="measurements",
     metadata={
@@ -94,20 +71,6 @@ def air_quality_data(
             input_manager_key="io_manager",
         )
     },
-    auto_materialize_policy=AutoMaterializePolicy.eager(
-        max_materializations_per_minute=None
-    )
-    .with_rules(
-        AutoMaterializeRule.skip_on_not_all_parents_updated(
-            require_update_for_all_parent_partitions=False
-        ),
-        AutoMaterializeRule.materialize_on_required_for_freshness(),
-    )
-    .without_rules(
-        AutoMaterializeRule.skip_on_parent_outdated(),
-        AutoMaterializeRule.skip_on_parent_missing(),
-    ),
-    op_tags=const.K8S_TAGS,
     code_version="v1",
     group_name="measurements",
 )
