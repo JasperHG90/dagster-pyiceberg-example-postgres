@@ -484,8 +484,8 @@ wheels = [
 
 [[package]]
 name = "dagster-pyiceberg"
-version = "0.0.1"
-source = { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.1/dagster_pyiceberg-0.0.1-py3-none-any.whl" }
+version = "0.0.2"
+source = { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.2/dagster_pyiceberg-0.0.2-py3-none-any.whl" }
 dependencies = [
     { name = "dagster" },
     { name = "pendulum" },
@@ -493,7 +493,7 @@ dependencies = [
     { name = "tenacity" },
 ]
 wheels = [
-    { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.1/dagster_pyiceberg-0.0.1-py3-none-any.whl", hash = "sha256:99ff29dac9af0fee10d13ec032b426d1ad527885e83bafd88eb0ff825e078936" },
+    { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.2/dagster_pyiceberg-0.0.2-py3-none-any.whl", hash = "sha256:b995879d7248d3ca45f35e7708e44647e03fad9356e1ce3d3859ab5782000155" },
 ]
 
 [package.metadata]
@@ -532,8 +532,8 @@ requires-dist = [
     { name = "coolname", specifier = ">=2.2.0" },
     { name = "dagit", specifier = ">=1.9.0" },
     { name = "dagster", specifier = ">=1.9.0" },
-    { name = "dagster-pyiceberg", url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.1/dagster_pyiceberg-0.0.1-py3-none-any.whl" },
-    { name = "dagster-pyiceberg-pandas", url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.1/dagster_pyiceberg_pandas-0.0.1-py3-none-any.whl" },
+    { name = "dagster-pyiceberg", url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.2/dagster_pyiceberg-0.0.2-py3-none-any.whl" },
+    { name = "dagster-pyiceberg-pandas", url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.2/dagster_pyiceberg_pandas-0.0.2-py3-none-any.whl" },
     { name = "httpx", specifier = ">=0.27.2" },
     { name = "pydantic", specifier = ">=2.9.2" },
     { name = "pyiceberg", extras = ["sql-postgres", "s3fs"], git = "https://github.com/apache/iceberg-python?rev=0cebec4" },
@@ -549,14 +549,14 @@ dev = [
 
 [[package]]
 name = "dagster-pyiceberg-pandas"
-version = "0.0.1"
-source = { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.1/dagster_pyiceberg_pandas-0.0.1-py3-none-any.whl" }
+version = "0.0.2"
+source = { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.2/dagster_pyiceberg_pandas-0.0.2-py3-none-any.whl" }
 dependencies = [
     { name = "dagster-pyiceberg" },
     { name = "pandas" },
 ]
 wheels = [
-    { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.1/dagster_pyiceberg_pandas-0.0.1-py3-none-any.whl", hash = "sha256:f50523bf59461694df0b9cdd118a68d3c9e3d351fb5a925d883bed3f8990ba59" },
+    { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.2/dagster_pyiceberg_pandas-0.0.2-py3-none-any.whl", hash = "sha256:f806f69edda6cad2a3e203cc0ca9af15c1db4850150dd17e3750aa6915bad38b" },
 ]
 
 [package.metadata]
