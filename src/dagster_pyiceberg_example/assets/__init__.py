@@ -73,8 +73,14 @@ def air_quality_data(
     },
     code_version="v1",
     group_name="measurements",
+    metadata={
+        "partition_expr": "measurement_date",
+    },
 )
 def daily_air_quality_data(
     context: AssetExecutionContext, ingested_data: pd.DataFrame
 ) -> pd.DataFrame:
+    context.log.info(f"Copying data for partition {context.partition_key}")
+    context.log.info(ingested_data.head())
+    context.log.info(ingested_data.shape)
     return ingested_data
