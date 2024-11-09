@@ -2,10 +2,16 @@ import os
 
 from dagster import Definitions, EnvVar
 from dagster_aws.s3 import S3PickleIOManager, S3Resource
+from dagster_dbt import DbtCliResource
 from dagster_pyiceberg import IcebergSqlCatalogConfig
 from dagster_pyiceberg_pandas import IcebergPandasIOManager
 
-from dagster_pyiceberg_example.assets import air_quality_data, daily_air_quality_data
+from dagster_pyiceberg_example.assets import (
+    air_quality_data,
+    daily_air_quality_data,
+    luchtmeetnet_models_dbt_assets,
+)
+from dagster_pyiceberg_example.assets.project import luchtmeetnet_models_project
 from dagster_pyiceberg_example.IO import (
     LuchtMeetNetResource,
     RateLimiterResource,
@@ -55,13 +61,13 @@ resources = {
             ),
         )
     ),
+    "dbt": DbtCliResource(
+        project_dir=luchtmeetnet_models_project,
+    ),
 }
 
 
 definition = Definitions(
-    assets=[
-        air_quality_data,
-        daily_air_quality_data,
-    ],
+    assets=[air_quality_data, daily_air_quality_data, luchtmeetnet_models_dbt_assets],
     resources=resources,
 )

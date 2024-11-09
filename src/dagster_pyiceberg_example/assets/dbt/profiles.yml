@@ -1,0 +1,30 @@
+luchtmeetnet_models:
+  outputs:
+    dev:
+      type: duckdb
+      threads: 4
+      extensions:
+        - httpfs
+        - parquet
+      secrets:
+        # See: https://duckdb.org/docs/extensions/httpfs/s3api.html#overview-of-s3-secret-parameters
+        - type: s3
+          region: 'us-east-1'
+          endpoint: "{{ env_var('DAGSTER_SECRET_S3_ENDPOINT') | replace('http://', '') }}"
+          url_style: path
+          use_ssl: false
+          key_id: "{{ env_var('DAGSTER_SECRET_S3_ACCESS_KEY_ID') }}"
+          secret: "{{ env_var('DAGSTER_SECRET_S3_SECRET_ACCESS_KEY') }}"
+      plugins:
+        # See: https://github.com/duckdb/dbt-duckdb/blob/master/tests/functional/plugins/test_iceberg.py
+        - module: iceberg
+          config:
+            catalog: "dagster_example_catalog"
+            uri: "{{ env_var('DAGSTER_SECRET_PYICEBERG_CATALOG_URI') }}"
+            "s3.endpoint": "{{ env_var('DAGSTER_SECRET_S3_ENDPOINT') }}"
+            "s3.access-key-id": "{{ env_var('DAGSTER_SECRET_S3_ACCESS_KEY_ID') }}"
+            "s3.secret-access-key": "{{ env_var('DAGSTER_SECRET_S3_SECRET_ACCESS_KEY') }}"
+            "py-io-impl": "pyiceberg.io.fsspec.FsspecFileIO"
+            "warehouse": "{{ env_var('DAGSTER_SECRET_S3_WAREHOUSE') }}"
+
+  target: dev

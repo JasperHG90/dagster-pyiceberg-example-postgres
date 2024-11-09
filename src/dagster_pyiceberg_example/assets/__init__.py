@@ -15,6 +15,7 @@ from dagster import (
     RetryPolicy,
     asset,
 )
+from dagster_dbt import DbtCliResource, dbt_assets
 from pandas.util import hash_pandas_object
 
 from dagster_pyiceberg_example.assets.utils import (
@@ -25,6 +26,8 @@ from dagster_pyiceberg_example.partitions import (
     daily_partition,
     daily_station_partition,
 )
+
+from .project import luchtmeetnet_models_project
 
 warnings.filterwarnings("ignore", category=ExperimentalWarning)
 
@@ -91,3 +94,8 @@ def daily_air_quality_data(
             for data_partition in ingested_data.values()
         ]
     )
+
+
+@dbt_assets(manifest=luchtmeetnet_models_project.manifest_path)
+def luchtmeetnet_models_dbt_assets(context: AssetExecutionContext, dbt: DbtCliResource):
+    yield from dbt.cli(["build"], context=context).stream()
