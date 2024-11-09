@@ -3,6 +3,7 @@ alias t := test
 alias p := pre_commit
 alias dd := dagster_dev
 alias cn := create_air_quality_namespace
+alias clz := create_landing_zone_bucket
 
 # Install python dependencies
 install:
@@ -26,6 +27,10 @@ test:
 # Create the 'air_quality' namespace in the pyiceberg catalog
 create_air_quality_namespace:
   uv run python scripts/create_catalog_namespace.py
+
+# Create landing zone bucket in Minio S3
+create_landing_zone_bucket:
+  uv run python scripts/create_landing_zone_bucket.py
 
 # Run dagster dev
 dagster_dev:
