@@ -23,7 +23,7 @@ This repository contains a devcontainer that spins up all required resources usi
 
 - A Redis database container to serve as a [backend](https://pyratelimiter.readthedocs.io/en/latest/modules/pyrate_limiter.buckets.redis_bucket.html) for pyrate-limiter.
 - A postgresql container to serve as the [PyIceberg catalog](https://py.iceberg.apache.org/reference/pyiceberg/catalog/sql/) backend.
-- MinIO for S3-compatible storage to serve as landing zone & data warehouse.
+- [MinIO](https://min.io/) for S3-compatible storage to serve as landing zone & data warehouse.
 
 All required details required to connect to the above services are added to the dotenv file found in .devcontainer/.env. This dotenv file is automatically loaded in the devcontainer environment.
 
