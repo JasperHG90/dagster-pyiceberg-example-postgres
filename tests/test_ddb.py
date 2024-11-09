@@ -57,10 +57,7 @@ def daily_air_quality_data(
     air_quality_data: Dict[str, List[Dict[str, Any]]]
 ) -> pd.DataFrame:
     return pd.concat(
-        [
-            pd.DataFrame.from_dict(data_partition)
-            for data_partition in air_quality_data.values()
-        ]
+        [pd.DataFrame(data_partition) for data_partition in air_quality_data.values()]
     )
 
 
