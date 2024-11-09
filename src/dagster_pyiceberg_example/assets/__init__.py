@@ -96,6 +96,8 @@ def daily_air_quality_data(
     )
 
 
-@dbt_assets(manifest=luchtmeetnet_models_project.manifest_path)
+@dbt_assets(
+    manifest=luchtmeetnet_models_project.manifest_path,
+)
 def luchtmeetnet_models_dbt_assets(context: AssetExecutionContext, dbt: DbtCliResource):
     yield from dbt.cli(["build"], context=context).stream()
