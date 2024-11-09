@@ -44,7 +44,7 @@ You can create the 'air_quality' namespace by executing `just cn`.
 
 You can run the example by executing `just dd`. The Dagster UI will be available on [localhost:3000](http://localhost:3000)
 
-Minio is available on [localhost:9001](http://localhost:9001).
+Minio is available on [localhost:9001](http://localhost:9001). Username and password are 'pyiceberg'.
 
 ## Inspecting the generated tables using `pyiceberg`
 
