@@ -1,6 +1,7 @@
 import os
 
 from dagster import Definitions, EnvVar
+from dagster_aws.s3 import S3PickleIOManager, S3Resource
 from dagster_pyiceberg import IcebergSqlCatalogConfig
 from dagster_pyiceberg_pandas import IcebergPandasIOManager
 
@@ -12,7 +13,17 @@ from dagster_pyiceberg_example.IO import (
 )
 
 resources = {
-    "io_manager": IcebergPandasIOManager(
+    "landing_zone_io_manager": S3PickleIOManager(
+        s3_resource=S3Resource(
+            endpoint_url=os.environ["DAGSTER_SECRET_S3_ENDPOINT"],
+            aws_access_key_id=os.environ["DAGSTER_SECRET_S3_ACCESS_KEY_ID"],
+            aws_secret_access_key=os.environ["DAGSTER_SECRET_S3_SECRET_ACCESS_KEY"],
+            aws_session_token=None,
+            verify=False,
+        ),
+        s3_bucket="landingzone",
+    ),
+    "warehouse_io_manager": IcebergPandasIOManager(
         name="dagster_example_catalog",
         config=IcebergSqlCatalogConfig(
             properties={

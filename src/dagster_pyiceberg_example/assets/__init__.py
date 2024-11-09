@@ -1,5 +1,6 @@
 import hashlib
 import warnings
+from typing import Any, Dict, List
 
 import pandas as pd
 from dagster import (
@@ -30,8 +31,8 @@ warnings.filterwarnings("ignore", category=ExperimentalWarning)
 
 @asset(
     description="Air quality data from the Luchtmeetnet API",
-    compute_kind="iceberg",
-    io_manager_key="io_manager",
+    compute_kind="python",
+    io_manager_key="landing_zone_io_manager",
     partitions_def=daily_station_partition,
     retry_policy=RetryPolicy(
         max_retries=3, delay=30, backoff=Backoff.EXPONENTIAL, jitter=Jitter.PLUS_MINUS
@@ -48,18 +49,18 @@ warnings.filterwarnings("ignore", category=ExperimentalWarning)
 def air_quality_data(
     context: AssetExecutionContext,
     luchtmeetnet_api: LuchtMeetNetResource,
-) -> Output[pd.DataFrame]:
+) -> Output[List[Dict[str, Any]]]:
     df = get_air_quality_data_for_partition_key(
         context.partition_key, context, luchtmeetnet_api
     )
     df_hash = hashlib.sha256(hash_pandas_object(df, index=True).values).hexdigest()
-    return Output(df, data_version=DataVersion(df_hash))
+    return Output(df.to_dict(orient="records"), data_version=DataVersion(df_hash))
 
 
 @asset(
-    description="Copy air quality data from ingestion to bronze",
+    description="Copy air quality data to iceberg table",
     compute_kind="iceberg",
-    io_manager_key="io_manager",
+    io_manager_key="warehouse_io_manager",
     partitions_def=daily_partition,
     ins={
         "ingested_data": AssetIn(
@@ -68,7 +69,10 @@ def air_quality_data(
             partition_mapping=MultiToSingleDimensionPartitionMapping(
                 partition_dimension_name="daily"
             ),
-            input_manager_key="io_manager",
+            input_manager_key="landing_zone_io_manager",
+            # NB: Some partitions can fail because of 500 errors from API
+            #  So we need to allow missing partitions
+            metadata={"allow_missing_partitions": True},
         )
     },
     code_version="v1",
@@ -78,9 +82,12 @@ def air_quality_data(
     },
 )
 def daily_air_quality_data(
-    context: AssetExecutionContext, ingested_data: pd.DataFrame
+    context: AssetExecutionContext, ingested_data: Dict[str, List[Dict[str, Any]]]
 ) -> pd.DataFrame:
     context.log.info(f"Copying data for partition {context.partition_key}")
-    context.log.info(ingested_data.head())
-    context.log.info(ingested_data.shape)
-    return ingested_data
+    return pd.concat(
+        [
+            pd.DataFrame.from_dict(data_partition)
+            for data_partition in ingested_data.values()
+        ]
+    )
