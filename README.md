@@ -10,10 +10,11 @@ This repository contains an example for [dagster-pyiceberg](https://jasperhg90.g
 
 This example ingests measured air quality data for 99 stations in The Netherlands from the [Luchtmeetnet API](https://api-docs.luchtmeetnet.nl/).
 
-This example contains two assets:
+This example contains three assets:
 
 - **air_quality_data**: Ingests data from the Luchtmeetnet API to a landing zone bucket. It is partitioned by station number and date. The data is written to storage using the [S3 Pickle IO manager](https://docs.dagster.io/_apidocs/libraries/dagster-aws#dagster_aws.s3.S3PickleIOManager). This asset uses a [Redis database](https://redis.io/) in combination with the [pyrate-limiter](https://pypi.org/project/pyrate-limiter/) python library to rate-limit requests to the Luchtmeetnet API (see rate limit information [here](https://api-docs.luchtmeetnet.nl/)).
 - **daily_air_quality_data**: Copies the ingested data from the landing zone to the warehouse in an [Apache Iceberg](https://iceberg.apache.org/) table using [dagster-pyiceberg](https://github.com/JasperHG90/dagster-pyiceberg). It is partitioned by date.
+- **stg_test**: a [dbt](https://www.getdbt.com/) asset that is loaded into dagster using the [dagster-dbt](https://www.getdbt.com/) library. It reads the iceberg table and outputs a parquet file.
 
 ![](./docs/assets.png)
 
