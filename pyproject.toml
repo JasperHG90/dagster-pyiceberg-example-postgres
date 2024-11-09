@@ -15,6 +15,7 @@ dependencies = [
     "pydantic>=2.9.2",
     "pyrate-limiter>=3.7.0",
     "redis>=5.2.0",
+    "dagster-aws>=0.25.0",
 ]
 
 [tool.uv.sources]
