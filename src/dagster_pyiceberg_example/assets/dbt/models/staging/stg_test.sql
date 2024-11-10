@@ -1,7 +1,8 @@
 {{
     config(
         materialized='external',
-        location="{{ env_var('DAGSTER_SECRET_S3_WAREHOUSE') }}/luchtmeetnet/test.parquet"
+        location='/home/vscode/workspace/.tmp/data/stg_test.parquet',
+        plugin="custom_iceberg"
     )
 }}
 

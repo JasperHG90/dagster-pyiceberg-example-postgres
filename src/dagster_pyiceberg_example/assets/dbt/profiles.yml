@@ -2,6 +2,7 @@ luchtmeetnet_models:
   outputs:
     dev:
       type: duckdb
+      path: /home/vscode/workspace/.tmp/dbt.duckdb
       threads: 4
       module_paths:
         - "{{ env_var('DBT_DUCKDB_CUSTOM_PLUGINS_DIR') }}"
@@ -20,8 +21,10 @@ luchtmeetnet_models:
       plugins:
         # See: https://github.com/duckdb/dbt-duckdb/blob/master/tests/functional/plugins/test_iceberg.py
         - module: custom_iceberg
+          # To do: get aws stuff from secret
           config:
             catalog: "dagster_example_catalog"
+            namespace: "air_quality"
             uri: "{{ env_var('DAGSTER_SECRET_PYICEBERG_CATALOG_URI') }}"
             "s3.endpoint": "{{ env_var('DAGSTER_SECRET_S3_ENDPOINT') }}"
             "s3.access-key-id": "{{ env_var('DAGSTER_SECRET_S3_ACCESS_KEY_ID') }}"
