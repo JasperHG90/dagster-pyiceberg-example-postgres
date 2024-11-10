@@ -1,8 +1,9 @@
 import os
+from pathlib import Path
 
 from dagster import Definitions, EnvVar
 from dagster_aws.s3 import S3PickleIOManager, S3Resource
-from dagster_dbt import DbtCliResource
+from dagster_dbt import DbtCliResource, DbtProject
 from dagster_pyiceberg import IcebergSqlCatalogConfig
 from dagster_pyiceberg_pandas import IcebergPandasIOManager
 
@@ -11,12 +12,22 @@ from dagster_pyiceberg_example.assets import (
     daily_air_quality_data,
     luchtmeetnet_models_dbt_assets,
 )
-from dagster_pyiceberg_example.assets.project import luchtmeetnet_models_project
+
+# from dagster_pyiceberg_example.assets.project import luchtmeetnet_models_project
 from dagster_pyiceberg_example.IO import (
     LuchtMeetNetResource,
     RateLimiterResource,
     RedisResource,
 )
+
+luchtmeetnet_models_project = DbtProject(
+    project_dir=Path(__file__).parent.joinpath("assets", "dbt").resolve(),
+    packaged_project_dir=Path(__file__)
+    .parent.joinpath("assets", "dbt-project")
+    .resolve(),
+)
+luchtmeetnet_models_project.prepare_if_dev()
+
 
 resources = {
     "landing_zone_io_manager": S3PickleIOManager(

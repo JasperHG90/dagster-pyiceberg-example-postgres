@@ -3,7 +3,7 @@ sources:
   - name: dagster_example_catalog
     schema: dagster_example_catalog
     config:
-      plugin: iceberg
+      plugin: custom_iceberg
       iceberg_table: "air_quality.{identifier}"
     tables:
       - name: daily_air_quality_data
