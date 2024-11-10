@@ -12,8 +12,6 @@ from dagster_pyiceberg_example.assets import (
     daily_air_quality_data,
     luchtmeetnet_models_dbt_assets,
 )
-
-# from dagster_pyiceberg_example.assets.project import luchtmeetnet_models_project
 from dagster_pyiceberg_example.IO import (
     LuchtMeetNetResource,
     RateLimiterResource,
