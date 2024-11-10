@@ -1,7 +1,7 @@
 {{
     config(
-        materialized='external',
-        location='/home/vscode/workspace/.tmp/data/stg_test.parquet',
+        materialized="external",
+        location="{{ env_var('DBT_DUCKDB_TEMP_DATA_DIR') }}/stg_test.parquet",
         plugin="custom_iceberg"
     )
 }}

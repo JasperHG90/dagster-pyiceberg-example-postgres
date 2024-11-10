@@ -1,5 +1,6 @@
 import hashlib
 import warnings
+from pathlib import Path
 from typing import Any, Dict, List
 
 import pandas as pd
@@ -15,7 +16,7 @@ from dagster import (
     RetryPolicy,
     asset,
 )
-from dagster_dbt import DbtCliResource, dbt_assets
+from dagster_dbt import DbtCliResource, DbtProject, dbt_assets
 from pandas.util import hash_pandas_object
 
 from dagster_pyiceberg_example.assets.utils import (
@@ -27,9 +28,13 @@ from dagster_pyiceberg_example.partitions import (
     daily_station_partition,
 )
 
-from .project import luchtmeetnet_models_project
-
 warnings.filterwarnings("ignore", category=ExperimentalWarning)
+
+luchtmeetnet_models_project = DbtProject(
+    project_dir=Path(__file__).parent.joinpath("dbt").resolve(),
+    packaged_project_dir=Path(__file__).parent.joinpath("dbt-project").resolve(),
+)
+luchtmeetnet_models_project.prepare_if_dev()
 
 
 @asset(

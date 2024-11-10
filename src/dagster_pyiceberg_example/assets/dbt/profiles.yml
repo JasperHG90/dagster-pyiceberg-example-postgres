@@ -2,7 +2,6 @@ luchtmeetnet_models:
   outputs:
     dev:
       type: duckdb
-      path: /home/vscode/workspace/.tmp/dbt.duckdb
       threads: 4
       module_paths:
         - "{{ env_var('DBT_DUCKDB_CUSTOM_PLUGINS_DIR') }}"
