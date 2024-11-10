@@ -37,6 +37,5 @@
     //"workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/workspace,type=bind",
     "features": {
       "ghcr.io/devcontainers/features/docker-in-docker:2": {}
-    },
-    "forwardPorts": [5000, 5432]
+    }
   }
