@@ -15,4 +15,4 @@ wheels/
 
 .tmp
 
-.dbt/.user.yml
+.user.yml
