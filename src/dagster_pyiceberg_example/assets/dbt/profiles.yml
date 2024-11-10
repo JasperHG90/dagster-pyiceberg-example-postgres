@@ -3,6 +3,8 @@ luchtmeetnet_models:
     dev:
       type: duckdb
       threads: 4
+      module_paths:
+        - "{{ env_var('DBT_DUCKDB_CUSTOM_PLUGINS_DIR') }}"
       extensions:
         - httpfs
         - parquet
@@ -17,7 +19,7 @@ luchtmeetnet_models:
           secret: "{{ env_var('DAGSTER_SECRET_S3_SECRET_ACCESS_KEY') }}"
       plugins:
         # See: https://github.com/duckdb/dbt-duckdb/blob/master/tests/functional/plugins/test_iceberg.py
-        - module: iceberg
+        - module: custom_iceberg
           config:
             catalog: "dagster_example_catalog"
             uri: "{{ env_var('DAGSTER_SECRET_PYICEBERG_CATALOG_URI') }}"
