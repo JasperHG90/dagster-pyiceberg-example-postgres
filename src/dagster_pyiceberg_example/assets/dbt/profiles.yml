@@ -2,6 +2,7 @@ luchtmeetnet_models:
   outputs:
     dev:
       type: duckdb
+      path: "{{ env_var('DBT_DUCKDB_TEMP_DATA_DIR') }}/dbt.duckdb"
       threads: 4
       module_paths:
         - "{{ env_var('DBT_DUCKDB_CUSTOM_PLUGINS_DIR') }}"
