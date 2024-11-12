@@ -69,8 +69,6 @@ class Plugin(BasePlugin):
 
         table_identifier = f"{namespace}.{table_name}"
 
-        print(table_identifier)
-
         if self._catalog.table_exists(table_identifier):
             table = self._catalog.load_table(table_identifier)
         else:
