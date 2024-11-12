@@ -23,6 +23,11 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "dbt_packages"
 
 
+seeds:
+  +meta:
+    dagster:
+      group: measurements
+
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 

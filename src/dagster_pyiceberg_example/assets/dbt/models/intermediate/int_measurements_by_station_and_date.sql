@@ -1,7 +1,7 @@
 {{
     config(
         materialized="external",
-        location="{{ env_var('DBT_DUCKDB_TEMP_DATA_DIR') }}/int_test.parquet",
+        location="{{ env_var('DBT_DUCKDB_TEMP_DATA_DIR') }}/int_measurements_by_station_and_date.parquet",
         plugin="custom_iceberg"
     )
 }}
@@ -17,9 +17,9 @@ with measurements as (
 final as (
 
     select
-        station_number,
-        b.location as station_location,
-        a.measurement_date,
+        measurements.station_number,
+        stations.location as station_location,
+        measurements.measurement_date,
         {% for formula in formulas -%}
 
             sum(
@@ -32,9 +32,9 @@ final as (
 
         {% endfor -%}
 
-    from measurements as a
+    from measurements
 
-    left join {{ ref('stations') }} as b on a.station_number = b.number
+    left join {{ ref('stations') }} as stations on measurements.station_number = stations.number
 
     group by 1, 2, 3
 

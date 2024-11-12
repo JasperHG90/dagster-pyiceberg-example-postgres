@@ -1,7 +1,7 @@
 {{
     config(
         materialized="external",
-        location="{{ env_var('DBT_DUCKDB_TEMP_DATA_DIR') }}/stg_test.parquet",
+        location="{{ env_var('DBT_DUCKDB_TEMP_DATA_DIR') }}/stg_luchtmeetnet__measurements.parquet",
         plugin="custom_iceberg"
     )
 }}
