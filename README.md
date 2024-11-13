@@ -2,7 +2,7 @@
 
 > [!WARNING] dagster-pyiceberg is in development
 >
-> The `dagster-pyiceberg` library is in development. It depends on unreleased changes in the `pyiceberg` library.
+> The `dagster-pyiceberg` library is in development.
 
 This repository contains an example for [dagster-pyiceberg](https://jasperhg90.github.io/dagster-pyiceberg/) with a postgresql backend.
 
