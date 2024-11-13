@@ -10,7 +10,7 @@
 
 with measurements as (
 
-    select * from {{ ref('stg_measurements') }}
+    select * from {{ ref('stg_luchtmeetnet__measurements') }}
 
 ),
 
