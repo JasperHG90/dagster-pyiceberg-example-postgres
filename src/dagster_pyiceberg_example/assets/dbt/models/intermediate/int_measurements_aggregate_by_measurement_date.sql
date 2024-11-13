@@ -12,7 +12,13 @@ with measurements as (
 
 ),
 
-final as (
+stations as (
+
+    select * from {{ ref('raw_stations') }}
+
+),
+
+measurements_summary_statistics as (
 
     select
         measurements.station_number,
@@ -24,24 +30,13 @@ final as (
         min(value) as min_value,
         max(value) as max_value,
         stddev(value) as stddev_value,
-        {% for formula in formulas -%}
-
-            sum(
-                case
-                    when formula = '{{ formula }}'
-                    then value
-                    else 0
-                end
-            ) as {{ formula }}_value,
-
-        {% endfor -%}
 
     from measurements
 
-    left join {{ ref('stations') }} as stations on measurements.station_number = stations.number
+    left join stations on measurements.station_number = stations.number
 
-    group by 1, 2, 3
+    group by 1, 2, 3, 4
 
 )
 
-select * from final
+select * from measurements_summary_statistics

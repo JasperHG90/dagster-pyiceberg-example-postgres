@@ -12,6 +12,12 @@ with measurements as (
 
 ),
 
+components as (
+
+    select * from {{ ref('raw_components') }}
+
+),
+
 components_by_station as (
 
     select
@@ -19,7 +25,7 @@ components_by_station as (
         measurements.formula,
         components.name_english as formula_name
     from measurements
-    left join {{ ref('components') }} as components on measurements.formula = components.formula
+    left join components on measurements.formula = components.formula
 
 )
 
