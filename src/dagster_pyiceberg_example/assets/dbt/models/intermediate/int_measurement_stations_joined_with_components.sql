@@ -1,7 +1,7 @@
 {{
     config(
         materialized="external",
-        location="{{ env_var('DBT_DUCKDB_TEMP_DATA_DIR') }}/int_components_by_station.parquet",
+        location="{{ env_var('DBT_DUCKDB_TEMP_DATA_DIR') }}/int_measurement_stations_joined_with_components.parquet",
         plugin="custom_iceberg"
     )
 }}

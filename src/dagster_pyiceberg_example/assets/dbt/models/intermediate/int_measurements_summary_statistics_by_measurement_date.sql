@@ -1,12 +1,10 @@
 {{
     config(
         materialized="external",
-        location="{{ env_var('DBT_DUCKDB_TEMP_DATA_DIR') }}/int_measurements_pivoted_to_station_and_date.parquet",
+        location="{{ env_var('DBT_DUCKDB_TEMP_DATA_DIR') }}/int_measurements_summary_statistics_by_measurement_date.parquet",
         plugin="custom_iceberg"
     )
 }}
-
-{%- set formulas = ['C10H8', 'C6H6', 'C7H8', 'C8H10', 'CO', 'H2S', 'NH3', 'NO', 'NO2', 'PM10', 'PM25', 'PS', 'SO2'] -%}
 
 with measurements as (
 
@@ -19,8 +17,13 @@ final as (
     select
         measurements.station_number,
         stations.location as station_location,
-        measurements.timestamp_measured,
-        first(measurements.measurement_date),
+        measurements.measurement_date,
+        formula,
+        avg(value) as mean_value,
+        median(value) as median_value,
+        min(value) as min_value,
+        max(value) as max_value,
+        stddev(value) as stddev_value,
         {% for formula in formulas -%}
 
             sum(
