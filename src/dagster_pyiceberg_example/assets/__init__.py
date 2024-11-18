@@ -1,14 +1,12 @@
-import hashlib
 import warnings
 from pathlib import Path
 from typing import Any, Dict, List
 
-import pandas as pd
+import polars as pl
 from dagster import (
     AssetExecutionContext,
     AssetIn,
     Backoff,
-    DataVersion,
     ExperimentalWarning,
     Jitter,
     MultiToSingleDimensionPartitionMapping,
@@ -17,7 +15,6 @@ from dagster import (
     asset,
 )
 from dagster_dbt import DbtCliResource, DbtProject, dbt_assets
-from pandas.util import hash_pandas_object
 
 from dagster_pyiceberg_example.assets.utils import (
     get_air_quality_data_for_partition_key,
@@ -61,8 +58,7 @@ def air_quality_data(
     df = get_air_quality_data_for_partition_key(
         context.partition_key, context, luchtmeetnet_api
     )
-    df_hash = hashlib.sha256(hash_pandas_object(df, index=True).values).hexdigest()
-    return Output(df.to_dict(orient="records"), data_version=DataVersion(df_hash))
+    return Output(df.to_dict(orient="records"))
 
 
 @asset(
@@ -91,13 +87,10 @@ def air_quality_data(
 )
 def daily_air_quality_data(
     context: AssetExecutionContext, ingested_data: Dict[str, List[Dict[str, Any]]]
-) -> pd.DataFrame:
+) -> pl.DataFrame:
     context.log.info(f"Copying data for partition {context.partition_key}")
-    return pd.concat(
-        [
-            pd.DataFrame.from_dict(data_partition)
-            for data_partition in ingested_data.values()
-        ]
+    return pl.concat(
+        [pl.DataFrame(data_partition) for data_partition in ingested_data.values()]
     )
 
 

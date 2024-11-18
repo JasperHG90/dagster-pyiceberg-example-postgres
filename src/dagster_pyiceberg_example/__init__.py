@@ -3,8 +3,8 @@ import os
 from dagster import Definitions, EnvVar
 from dagster_aws.s3 import S3PickleIOManager, S3Resource
 from dagster_dbt import DbtCliResource
-from dagster_pyiceberg import IcebergSqlCatalogConfig
-from dagster_pyiceberg_pandas import IcebergPandasIOManager
+from dagster_pyiceberg.config import IcebergCatalogConfig
+from dagster_pyiceberg.io_manager.polars import IcebergPolarsIOManager
 
 from dagster_pyiceberg_example.assets import (
     air_quality_data,
@@ -29,9 +29,9 @@ resources = {
         ),
         s3_bucket="landingzone",
     ),
-    "warehouse_io_manager": IcebergPandasIOManager(
+    "warehouse_io_manager": IcebergPolarsIOManager(
         name="dagster_example_catalog",
-        config=IcebergSqlCatalogConfig(
+        config=IcebergCatalogConfig(
             properties={
                 "uri": os.environ["DAGSTER_SECRET_PYICEBERG_CATALOG_URI"],
                 "s3.endpoint": os.environ["DAGSTER_SECRET_S3_ENDPOINT"],

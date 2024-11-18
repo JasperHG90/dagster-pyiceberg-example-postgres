@@ -608,8 +608,8 @@ wheels = [
 
 [[package]]
 name = "dagster-pyiceberg"
-version = "0.0.4"
-source = { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.4/dagster_pyiceberg-0.0.4-py3-none-any.whl" }
+version = "0.1.1"
+source = { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.1.1/dagster_pyiceberg-0.1.1-py3-none-any.whl" }
 dependencies = [
     { name = "dagster" },
     { name = "pendulum" },
@@ -617,13 +617,21 @@ dependencies = [
     { name = "tenacity" },
 ]
 wheels = [
-    { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.4/dagster_pyiceberg-0.0.4-py3-none-any.whl", hash = "sha256:1dd5e108b91dfacf270970cbb43751f30e73ccb9e780cd386c74ab1106fb5466" },
+    { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.1.1/dagster_pyiceberg-0.1.1-py3-none-any.whl", hash = "sha256:06ba8a9c9aff4ca0c0727eb9854762418da62b3ae508e2903edb1a6b8242da89" },
+]
+
+[package.optional-dependencies]
+polars = [
+    { name = "polars" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "dagster", specifier = ">=1.8.2" },
+    { name = "getdaft", marker = "extra == 'daft'", specifier = ">=0.3.13" },
+    { name = "pandas", marker = "extra == 'pandas'", specifier = ">=2.2.3" },
     { name = "pendulum", specifier = ">=3.0.0" },
+    { name = "polars", marker = "extra == 'polars'", specifier = ">=1.13.1" },
     { name = "pyiceberg", extras = ["pyarrow"], specifier = "==0.8.0rc1" },
     { name = "tenacity", specifier = ">=8.5.0" },
 ]
@@ -638,13 +646,13 @@ dependencies = [
     { name = "dagster" },
     { name = "dagster-aws" },
     { name = "dagster-dbt" },
-    { name = "dagster-pyiceberg" },
-    { name = "dagster-pyiceberg-pandas" },
+    { name = "dagster-pyiceberg", extra = ["polars"] },
     { name = "dbt-core" },
     { name = "dbt-duckdb" },
     { name = "httpx" },
+    { name = "pandas" },
     { name = "pydantic" },
-    { name = "pyiceberg", extra = ["s3fs", "sql-postgres"] },
+    { name = "pyiceberg", extra = ["daft", "s3fs", "sql-postgres"] },
     { name = "pyrate-limiter" },
     { name = "redis" },
 ]
@@ -663,13 +671,13 @@ requires-dist = [
     { name = "dagster", specifier = ">=1.9.0" },
     { name = "dagster-aws", specifier = ">=0.25.0" },
     { name = "dagster-dbt", specifier = ">=0.25.0" },
-    { name = "dagster-pyiceberg", url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.4/dagster_pyiceberg-0.0.4-py3-none-any.whl" },
-    { name = "dagster-pyiceberg-pandas", url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.4/dagster_pyiceberg_pandas-0.0.4-py3-none-any.whl" },
+    { name = "dagster-pyiceberg", extras = ["polars"], url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.1.1/dagster_pyiceberg-0.1.1-py3-none-any.whl" },
     { name = "dbt-core", specifier = ">=1.8.8" },
     { name = "dbt-duckdb", specifier = ">=1.9.0" },
     { name = "httpx", specifier = ">=0.27.2" },
+    { name = "pandas", specifier = ">=2.2.3" },
     { name = "pydantic", specifier = ">=2.9.2" },
-    { name = "pyiceberg", extras = ["sql-postgres", "s3fs"] },
+    { name = "pyiceberg", extras = ["daft", "s3fs", "sql-postgres"] },
     { name = "pyrate-limiter", specifier = ">=3.7.0" },
     { name = "redis", specifier = ">=5.2.0" },
 ]
@@ -679,24 +687,6 @@ dev = [
     { name = "ipykernel", specifier = ">=6.29.5" },
     { name = "pre-commit", specifier = ">=4.0.1" },
     { name = "pytest", specifier = ">=8.3.3" },
-]
-
-[[package]]
-name = "dagster-pyiceberg-pandas"
-version = "0.0.4"
-source = { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.4/dagster_pyiceberg_pandas-0.0.4-py3-none-any.whl" }
-dependencies = [
-    { name = "dagster-pyiceberg" },
-    { name = "pandas" },
-]
-wheels = [
-    { url = "https://github.com/JasperHG90/dagster-pyiceberg/releases/download/v0.0.4/dagster_pyiceberg_pandas-0.0.4-py3-none-any.whl", hash = "sha256:58464fb1e9cbae2147be5ed04f11c2fce614531d8e0809cec01f18e603590a97" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "dagster-pyiceberg" },
-    { name = "pandas", specifier = ">=2.2.3" },
 ]
 
 [[package]]
@@ -1015,6 +1005,24 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/fa/08/cac914ff6ff46c4500fc4323a939dbe7a0f528cca04e7fd3e859611dea41/fsspec-2023.12.2.tar.gz", hash = "sha256:8548d39e8810b59c38014934f6b31e57f40c1b20f911f4cc2b85389c7e9bf0cb", size = 167507 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/70/25/fab23259a52ece5670dcb8452e1af34b89e6135ecc17cd4b54b4b479eac6/fsspec-2023.12.2-py3-none-any.whl", hash = "sha256:d800d87f72189a745fa3d6b033b9dc4a34ad069f60ca60b943a63599f5501960", size = 168979 },
+]
+
+[[package]]
+name = "getdaft"
+version = "0.3.13"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "fsspec" },
+    { name = "pyarrow" },
+    { name = "tqdm" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/39/18/9660891c077d3b771cb57e93408fa475014018cd6c7335aa3abcbb79619d/getdaft-0.3.13.tar.gz", hash = "sha256:d0cbb2e463af5b628c18cd7e182c21dee7f50f5f9d4fe93b4a2ebeb52593e928", size = 3898373 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/80/17/dd2f9edf01dfb124d64edbb0833afdb767961728b3b0e01ec1328e92a95e/getdaft-0.3.13-cp38-abi3-macosx_10_12_x86_64.whl", hash = "sha256:3c267a563b41c0997b897c7b354f97e932bf56bf8096fb1040860d629b529cde", size = 29900622 },
+    { url = "https://files.pythonhosted.org/packages/df/a1/d1def7b38ca8fb2d45348c12409e60566a012fe977633c1a4142dedb9cb9/getdaft-0.3.13-cp38-abi3-macosx_11_0_arm64.whl", hash = "sha256:88afa12e888bd408dcb9a6b2cda139c73b8b201baac1eddb4d25eaaefd2804a5", size = 27674539 },
+    { url = "https://files.pythonhosted.org/packages/91/eb/c08e633a917e2a4c5f2e895912782216ae616a0ccecc741935d0f203a9e4/getdaft-0.3.13-cp38-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:e7ff3e8a09c8647a2e6fc38bf94eabf9b7c05b8e999ffb7fb02a97bee51049f5", size = 31523766 },
+    { url = "https://files.pythonhosted.org/packages/1c/20/dab88809595219135ac5f6d59d8b37deb50e06f58e3fbad7031e53c858b8/getdaft-0.3.13-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:58f7bfd1ed4915af020975ba9a97074c8852a0f4d55ebac5ceaced4a784b61ca", size = 33134547 },
+    { url = "https://files.pythonhosted.org/packages/f6/61/4a97e2f823e538918384a31ade99c3da47c3354f30a664af39378df2d0ff/getdaft-0.3.13-cp38-abi3-win_amd64.whl", hash = "sha256:1a1cef3bf3fdffaa752f3f05994db9eda52a4d97097768aeaeb9abca1d062960", size = 30091518 },
 ]
 
 [[package]]
@@ -1992,6 +2000,19 @@ wheels = [
 ]
 
 [[package]]
+name = "polars"
+version = "1.14.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/10/5c/3376329b60b960cf0e615d6a2e13d57a59809665ee87960ad2edefd77a4e/polars-1.14.0.tar.gz", hash = "sha256:e34fbeca4664fba754a12d0a66b36569c4c9e5a0116108d9362067a0ca596b4d", size = 4147056 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/91/77/cee560ffa16842787f9524afeedc82c04dceb50ac42ab2ef6d3c2840a602/polars-1.14.0-cp39-abi3-macosx_10_12_x86_64.whl", hash = "sha256:f346177c6f3442e8e61eadc4830d588348bf3383b0100d1c942b5615813be16e", size = 34292998 },
+    { url = "https://files.pythonhosted.org/packages/3c/ae/f084dbb5d80599d7bbabbc21aa42a129d7ac55afafa70190987a525c9694/polars-1.14.0-cp39-abi3-macosx_11_0_arm64.whl", hash = "sha256:588b5622b3a73be874a8e432d45c8a122662c09ce5ba2d5e5966f6dacce2b914", size = 30178132 },
+    { url = "https://files.pythonhosted.org/packages/dd/3a/f03ee80d8dba47b3fc10d02191ee1690b8d4791626da5ea0a29435bd9b24/polars-1.14.0-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0bc46ad6ceeec5d9d881f09c7c1811844e851980735f8455981cdea456e08f5c", size = 35522548 },
+    { url = "https://files.pythonhosted.org/packages/47/a0/71f9a9a207820fee6aa09fc21d88961eeb9772fb39b6b9922ad4cdb42df3/polars-1.14.0-cp39-abi3-manylinux_2_24_aarch64.whl", hash = "sha256:3fc0cf084f848799379e8eba14733ae0e9d66a0fa8ec41719df82ed29c827003", size = 31893694 },
+    { url = "https://files.pythonhosted.org/packages/9c/84/4310aa0d4b526a60ee6e88e50514123682696bf37bc5f6c9298f6902e411/polars-1.14.0-cp39-abi3-win_amd64.whl", hash = "sha256:5ca507d162f88a44e1a945feecfa474fda0b66f378336d69b9ee23917da670c3", size = 35280144 },
+]
+
+[[package]]
 name = "pre-commit"
 version = "4.0.1"
 source = { registry = "https://pypi.org/simple" }
@@ -2301,6 +2322,9 @@ wheels = [
 ]
 
 [package.optional-dependencies]
+daft = [
+    { name = "getdaft" },
+]
 pyarrow = [
     { name = "pyarrow" },
 ]
