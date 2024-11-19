@@ -3,7 +3,6 @@ import os
 from dagster import Definitions, EnvVar
 from dagster_aws.s3 import S3PickleIOManager, S3Resource
 from dagster_dbt import DbtCliResource
-from dagster_pyiceberg.config import IcebergCatalogConfig
 from dagster_pyiceberg.io_manager.polars import IcebergPolarsIOManager
 
 from dagster_pyiceberg_example.assets import (
@@ -31,18 +30,6 @@ resources = {
     ),
     "warehouse_io_manager": IcebergPolarsIOManager(
         name="dagster_example_catalog",
-        config=IcebergCatalogConfig(
-            properties={
-                "uri": os.environ["DAGSTER_SECRET_PYICEBERG_CATALOG_URI"],
-                "s3.endpoint": os.environ["DAGSTER_SECRET_S3_ENDPOINT"],
-                "s3.access-key-id": os.environ["DAGSTER_SECRET_S3_ACCESS_KEY_ID"],
-                "s3.secret-access-key": os.environ[
-                    "DAGSTER_SECRET_S3_SECRET_ACCESS_KEY"
-                ],
-                "py-io-impl": "pyiceberg.io.fsspec.FsspecFileIO",
-                "warehouse": os.environ["DAGSTER_SECRET_S3_WAREHOUSE"],
-            },
-        ),
         schema="air_quality",
         partition_spec_update_mode="update",
         schema_update_mode="update",

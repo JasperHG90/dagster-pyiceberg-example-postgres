@@ -1,0 +1,9 @@
+catalog:
+  dagster_example_catalog:
+    type: sql
+    uri: postgresql+psycopg2://pyiceberg:pyiceberg@postgres/catalog
+    s3.endpoint: http://minio:9000
+    s3.access-key-id: pyiceberg
+    s3.secret-access-key: pyiceberg
+    py-io-impl: pyiceberg.io.fsspec.FsspecFileIO
+    warehouse: s3://warehouse
