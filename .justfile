@@ -39,4 +39,4 @@ dagster_dev:
   mkdir -p .dagster
   cp dagster.yaml .dagster/dagster.yaml
   export DAGSTER_HOME=$(pwd)/.dagster
-  uv run dagster dev -d /home/vscode/workspace -f /home/vscode/workspace/src/dagster_pyiceberg_example/__init__.py
+  uv run dagster dev -d /home/vscode/workspace -m luchtmeetnet
