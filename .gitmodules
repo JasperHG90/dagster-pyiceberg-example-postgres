@@ -1,0 +1,3 @@
+[submodule "dagster-dag-luchtmeetnet"]
+	path = dagster-dag-luchtmeetnet
+	url = https://github.com/JasperHG90/dagster-dag-luchtmeetnet
