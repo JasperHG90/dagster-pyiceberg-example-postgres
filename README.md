@@ -1,14 +1,14 @@
-# dagster-pyiceberg example using an Postgresql catalog
+# dagster-iceberg example using an Postgresql catalog
 
-> [!WARNING] dagster-pyiceberg is in development
+> [!WARNING] dagster-iceberg is in development
 >
-> The `dagster-pyiceberg` library is in development.
+> The `dagster-iceberg` library is in development.
 
-This repository contains an example for [dagster-pyiceberg](https://jasperhg90.github.io/dagster-pyiceberg/) with a postgresql backend.
+This repository contains an example for [dagster-iceberg](https://github.com/dagster-io/community-integrations/tree/main/libraries/dagster-iceberg) with a postgresql backend.
 
 ## The DAG
 
-The example DAG is hosted [here](). It ingests measured air quality data for 99 stations in The Netherlands from the [Luchtmeetnet API](https://api-docs.luchtmeetnet.nl/). Read the [repository README]() for more information.
+The example DAG is hosted [here](https://github.com/JasperHG90/dagster-dag-luchtmeetnet). It ingests measured air quality data for 99 stations in The Netherlands from the [Luchtmeetnet API](https://api-docs.luchtmeetnet.nl/). Read the [repository README](https://github.com/JasperHG90/dagster-dag-luchtmeetnet/blob/main/README.md) for more information.
 
 ![](./docs/assets.png)
 
